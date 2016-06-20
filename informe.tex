@@ -75,9 +75,9 @@ Docente Responsable: & Msc. Ing. Guillermo Carbajal \\ % Instructor/supervisor
 
 \section{Introducción}
 
-El presente informe detalla sobre un módulo de procesamiento de audio en tiempo real, para funcionamiento embebido en un software de analíticas para seguridad urbana desarrollado en su totalidad por SONDA Uruguay. El software forma parte de la tecnología implantada en el Centro de Monitoreo (CM) del Ministerio del Interior, en el proyecto Ciudad Segura.
+El presente informe detalla sobre un módulo de procesamiento de audio en tiempo real, para funcionamiento embebido en un software de analíticas para seguridad urbana, desarrollado en su totalidad por SONDA Uruguay. El software forma parte de la tecnología implantada en el Centro de Monitoreo (CM) del Ministerio del Interior, en el proyecto Ciudad Segura.\cite{Crocco:2016:ASS:2891449.2871183}
 
-El software de analíticas tiene como objetivo facilitar el trabajo de los visualizadores del CM alertando automáticamente frente a eventos de interés predefinidos mediante el procesamiento de Audio y Video en tiempo real.  
+El software de analíticas tiene como objetivo apoyar la operativa de los visualizadores del CM, alertando automáticamente frente a eventos de interés predefinidos, mediante el procesamiento de Audio y Video en tiempo real.  
 
 \subsection{Sobre SONDA Uruguay}
 \label{SONDA Uruguay}
@@ -89,12 +89,20 @@ SONDA Uruguay S.A. es fundamentalmente una empresa de servicios y proyectos de i
 %	SECTION 2
 %----------------------------------------------------------------------------------------
 
-\section{Methodology}
+\section{Plataforma de procesamiento}
 
-\subsection{Feature Extraction}
+Los sensores para Seguridad Urbana (en particular las cámaras de video y micrófonos) en su mayoría trabajan en tiempo real transmitiendo a traves de la red IP los datos adquiridos. El analisis de audio 
+
+\section{Analíticas}
+
+Las analíticas son el resultado de la toma de decisiones mediante el procesamiento de señales siendo el trigger de la alarma
+
+\subsection{Umbralizacion en dB}
+Tiene como objetivo alertar ante momentos de alto nivel sonoro o ausenci
+
+\subsection{Detección de Sirenas}
 For all the following experiments, we extracted Mel-Frequency Cepstral Coefficients (MFCC) from audio slices of \SI{20}{\milli\second} with 50\% frame overlap and hamming windowing. As in \cite{Salamon:UrbanSound:ACMMM:14} work, we computed 40 Mel bands between 0 and \SI{22050}{\Hz} and kept the first 25 coefficients. 
 
-\subsection{Classification}
 
 %----------------------------------------------------------------------------------------
 %	SECTION 3
