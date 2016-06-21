@@ -1,18 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% University/School Laboratory 
-% LaTeX Template
-% Version 3.1 (25/3/14)
-%
-% This template has been downloaded from:
-% http://www.LaTeXTemplates.com
-%
-% Original author:
-% Linux and Unix Users Group at Virginia Tech Wiki 
-% (https://vtluug.org/wiki/Example_LaTeX_chem_lab_report)
-%
-% License:
-% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
-%
+% DOCUMENTACION PASANTIA EN SONDA URUGUAY
+% ING. JUAN BRAGA
+% MAESTRÍA EN INGENIERÍA ELÉCTRICA, UDELAR
+% JUNIO 2016
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %----------------------------------------------------------------------------------------
@@ -40,8 +30,8 @@
 %	DOCUMENT INFORMATION
 %----------------------------------------------------------------------------------------
 
-\title{\textbf{Desarrollo de módulo de procesamiento de audio en tiempo real con aplicación a seguridad urbana}\\ Pasantía Laboral en SONDA Uruguay\\
-\large Maestría en Ingeniería Eléctrica del \textit{Instituto de Ingeniería Eléctrica, Facultad de Ingeniería, Universidad de la República, Uruguay.}}
+\title{\textbf{Desarrollo de módulo de procesamiento de audio en tiempo real con aplicación a seguridad urbana}\\ \textsc{Pasantía Laboral en SONDA Uruguay}\\
+\large \textsc{Maestría en Ingeniería Eléctrica} del \textit{Instituto de Ingeniería Eléctrica, Facultad de Ingeniería, Universidad de la República, Uruguay.}}
 
 \author{Ing. Juan \textsc{Braga}}
 
@@ -71,14 +61,17 @@ Docente Responsable: & Msc. Ing. Guillermo Carbajal \\ % Instructor/supervisor
 
 \section{Introducción}
 
-El presente informe detalla sobre un módulo de procesamiento de audio en tiempo real, para funcionamiento embebido en un software de analíticas para seguridad urbana, desarrollado en su totalidad por SONDA Uruguay. El software forma parte de la tecnología implantada en el Centro de Monitoreo (CM) del Ministerio del Interior, en el proyecto Ciudad Segura. \cite{Crocco:2016:ASS:2891449.2871183}
+El presente informe tiene como objetivo la documentación del desarrollo realizado en SONDA Uruguay en el período de Diciembre 2015 a Marzo 2016, para su aprobación en créditos de la Maestría en Ingeniería Eléctrica de la UdelaR. 
 
-El software de analíticas tiene como objetivo apoyar la operativa de los visualizadores del CM, alertando automáticamente frente a eventos de interés predefinidos, mediante el procesamiento de Audio y Video en tiempo real.  
+Se detalla sobre un módulo de procesamiento de audio en tiempo real, para funcionamiento embebido en un software de analíticas para seguridad urbana, desarrollado en su totalidad por el equipo de Ingenieros de SONDA Uruguay. 
+
+El software de analíticas actualmente forma parte de la tecnología implantada en el Centro de Monitoreo (CM) del Ministerio del Interior, en el proyecto Ciudad Segura. \cite{Crocco:2016:ASS:2891449.2871183} Tiene como objetivo apoyar la operativa de los visualizadores del CM, alertando automáticamente frente a eventos de interés predefinidos, mediante el procesamiento de Audio y Video en tiempo real.  
 
 \subsection{Sobre SONDA Uruguay}
 \label{SONDA Uruguay}
 
 SONDA Uruguay S.A. es fundamentalmente una empresa de servicios y proyectos de integracion de sistemas y provision de plataformas en el campo de las tecnologías de la información. Actualmente SONDA Uruguay S.A. está trabajando en proyectos de I+D en el area de tratamiento de señales, particularmente audio y video. Este equipo de I+D esta conformado por ingenieros de Sistemas y de Eléctrica.
+
 
  
 %----------------------------------------------------------------------------------------
@@ -87,9 +80,23 @@ SONDA Uruguay S.A. es fundamentalmente una empresa de servicios y proyectos de i
 
 \section{Plataforma de procesamiento}
 
-Los sensores para Seguridad Urbana (en particular las cámaras de video y micrófonos) son diseñados actualmente para trabajar en tiempo real, transmitiendo a traves de una red IP los datos adquiridos a una central donde se realiza el monitoreo y la toma de decisiones. 
+Los sensores para Seguridad Urbana (en particular las cámaras de video y micrófonos) son diseñados para trabajar en tiempo real, transmitiendo a traves de una red IP los datos adquiridos, a una central donde se realiza el monitoreo y la toma de decisiones. Es en este escenario donde los algoritmos de procesamiento de audio se encuentran embebidos y los tiempos de procesamiento no deben exceder la cadencia de disponibilidad de datos.
 
-La plataforma se puede dividir en 
+La plataforma de procesamiento, se puede dividir en dos grandes bloques: por un lado el de genereración de datos de audio y comunicaciones, y por otro la adquisición desde la red y procesamiento para la toma de decisiones, como se observa en la figura \ref{fig:plataforma_procesamiento}.
+
+De un lado 
+
+El módulo de adquisición hace disponible las muestras de audio, en ventanas de largo configurable según los requerimientos de la algoritmia.
+
+El procesamiento y la toma de decisiones 
+
+\begin{figure}[here]
+\begin{center}
+\includegraphics[width=0.65\textwidth]{plataforma_procesamiento} 
+\caption{Esquema de la plataforma de procesamiento. A la izquierda el bloque de generación y comunicaciones, a la derecha el de adquisición y procesamiento.}
+\label{fig:plataforma_procesamiento}
+\end{center}
+\end{figure}
 
 \section{Analíticas}
 
@@ -99,7 +106,19 @@ Las analíticas son el resultado de la toma de decisiones mediante el procesamie
 Tiene como objetivo alertar ante momentos de alto nivel sonoro o ausenci
 
 \subsection{Detección de Sirenas}
-For all the following experiments, we extracted Mel-Frequency Cepstral Coefficients (MFCC) from audio slices of \SI{20}{\milli\second} with 50\% frame overlap and hamming windowing. As in \cite{Salamon:UrbanSound:ACMMM:14} work, we computed 40 Mel bands between 0 and \SI{22050}{\Hz} and kept the first 25 coefficients. 
+For all the following experiments, we extracted Mel-Frequency Cepstral Coefficients (MFCC) from audio slices of \SI{20}{\milli\second} with 50\% frame overlap and hamming windowing. As in  work, we computed 40 Mel bands between 0 and \SI{22050}{\Hz} and kept the first 25 coefficients. 
+
+\begin{figure}[here]
+\begin{center}
+\includegraphics[width=0.3\textwidth]{deteccion_sirenas} 
+\caption{Esquema de la analítica de detección de sirenas. Se observa una primer etapa de substracción de fondo y posterior clasificación en sirena o no.}
+\label{fig:deteccion_sirenas}
+\end{center}
+\end{figure}
+
+\subsubsection{Features}
+Se utilizan al igual que en la publicacion \cite{Salamon:UrbanSound:ACMMM:14} los coeficientes MFCC (Mel-Frequency Cepstral Coeficients). 
+\subsubsection{Entrenamiento y Clasificación}
 
 
 %----------------------------------------------------------------------------------------
@@ -127,12 +146,7 @@ For all the following experiments, we extracted Mel-Frequency Cepstral Coefficie
 
 The atomic weight of magnesium is concluded to be \SI{24}{\gram\per\mol}, as determined by the stoichiometry of its chemical combination with oxygen. This result is in agreement with the accepted value.
 
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=0.65\textwidth]{placeholder} % Include the image placeholder.png
-\caption{Figure caption.}
-\end{center}
-\end{figure}
+
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY
