@@ -33,7 +33,7 @@
 \title{\textbf{Desarrollo de módulo de procesamiento de audio en tiempo real con aplicación a seguridad urbana}\\ \textsc{Pasantía Laboral en SONDA Uruguay}\\
 \large \textsc{Maestría en Ingeniería Eléctrica} del \textit{Instituto de Ingeniería Eléctrica, Facultad de Ingeniería, Universidad de la República, Uruguay.}}
 
-\author{Ing. Juan \textsc{Braga}}
+\author{\textsc{Ing. Juan Braga}}
 
 \date{\today} % Date for the report
 
@@ -43,45 +43,44 @@
 
 \begin{center}
 \begin{tabular}{l r}
-Período: & Diciembre 2015 a Marzo 2016 \\ % Date the experiment was performed
-Equipo de SONDA Uruguay: & Msc. Ing. Guillermo Carbajal \\ & Ing. Florencia Lanzaro \\ % Partner names
-
-Docente Responsable: & Msc. Ing. Guillermo Carbajal \\ % Instructor/supervisor
+\medskip
+\textsc{Período:} & Diciembre 2015 a Marzo 2016 \\ % Date the experiment was performed
+\textsc{Docente Responsable:} & Msc. Ing. Guillermo Carbajal \\ 
+\textsc{Responsable SONDA Uruguay:} & Gerente de Proyectos Nestor Rossi \\
+\textsc{Equipo de SONDA Uruguay:} & Msc. Ing. Guillermo Carbajal \\ & Ing. Florencia Lanzaro \\ 
 \end{tabular}
 \end{center}
 
 % If you wish to include an abstract, uncomment the lines below
-% \begin{abstract}
-% Abstract text
-% \end{abstract}
+\begin{abstract}
+El presente informe tiene como objetivo la documentación del desarrollo realizado en SONDA Uruguay en el período de Diciembre 2015 a Marzo 2016, para su aprobación en créditos de la Maestría en Ingeniería Eléctrica de la UdelaR. Se detalla sobre un módulo de procesamiento de audio en tiempo real, para funcionamiento embebido en un software de analíticas para seguridad urbana, desarrollado en su totalidad por el equipo de Ingenieros de SONDA Uruguay. 
+\end{abstract}
 
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 
 \section{Introducción}
+El monitoreo en tiempo real de las actividades humanas para Seguridad Urbana se ha vuelto masivo con el pasar de los últimos años a nivel mundial. La cantidad de sensores distribuidos por las ciudadades ha crecido enormemente. Es en los centros de monitoreo, donde confluyen los sensores colocados por la ciudad, que surge la necesidad de automatizar los procesos de visualización y control para hacer la operativa más eficiente, \cite{Crocco:2016:ASS:2891449.2871183}. En este escenario es donde SONDA Uruguay motiva el desarrollo de un software de analíticas de audio y video, para el monitoreo automático en tiempo real de los espacios urbanos.   
 
-
-El presente informe tiene como objetivo la documentación del desarrollo realizado en SONDA Uruguay en el período de Diciembre 2015 a Marzo 2016, para su aprobación en créditos de la Maestría en Ingeniería Eléctrica de la UdelaR. 
-
-Se detalla sobre un módulo de procesamiento de audio en tiempo real, para funcionamiento embebido en un software de analíticas para seguridad urbana, desarrollado en su totalidad por el equipo de Ingenieros de SONDA Uruguay. 
-
-El software de analíticas actualmente forma parte de la tecnología implantada en el Centro de Monitoreo (CM) del Ministerio del Interior, en el proyecto Ciudad Segura. \cite{Crocco:2016:ASS:2891449.2871183} Tiene como objetivo apoyar la operativa de los visualizadores del CM, alertando automáticamente frente a eventos de interés predefinidos, mediante el procesamiento de Audio y Video en tiempo real.  
+\subsection{Sobre el software de analíticas de audio y video}
+El software de analíticas actualmente forma parte de la tecnología implantada en el Centro de Monitoreo (CM) del Ministerio del Interior, en el proyecto Ciudad Segura.  Tiene como objetivo apoyar la operativa de los visualizadores del CM, alertando automáticamente frente a eventos de interés predefinidos, mediante el procesamiento de Audio y Video en tiempo real.  
 
 \subsection{Sobre SONDA Uruguay}
-\label{SONDA Uruguay}
-
 SONDA Uruguay S.A. es fundamentalmente una empresa de servicios y proyectos de integracion de sistemas y provision de plataformas en el campo de las tecnologías de la información. Actualmente SONDA Uruguay S.A. está trabajando en proyectos de I+D en el area de tratamiento de señales, particularmente audio y video. Este equipo de I+D esta conformado por ingenieros de Sistemas y de Eléctrica.
 
+\bigskip
 
+En lo que sigue se detallará sobre el módulo de procesamiento de audio en tiempo real, para funcionamiento embebido en dicho software.
  
 %----------------------------------------------------------------------------------------
 %	SECTION 2
 %----------------------------------------------------------------------------------------
 
 \section{Plataforma de procesamiento}
-
+\label{PP}
 Los sensores para Seguridad Urbana (en particular las cámaras de video y micrófonos) son diseñados para trabajar en tiempo real, transmitiendo a traves de una red IP los datos adquiridos, a una central donde se realiza el monitoreo y la toma de decisiones. Es en este escenario donde los algoritmos de procesamiento de audio se encuentran embebidos y los tiempos de procesamiento no deben exceder la cadencia de disponibilidad de datos.
+\smallskip
 
 La plataforma de procesamiento, se puede dividir en dos grandes bloques: por un lado el de genereración de datos de audio y comunicaciones, y por otro la adquisición desde la red y procesamiento para la toma de decisiones, como se observa en la figura \ref{fig:plataforma_procesamiento}.
 
@@ -100,14 +99,13 @@ El procesamiento y la toma de decisiones
 \end{figure}
 
 \section{Analíticas}
-
 Las analíticas son el resultado de la toma de decisiones mediante el procesamiento de señales siendo el trigger de la alarma
 
 \subsection{Umbralizacion en dB}
 Tiene como objetivo alertar ante momentos de alto nivel sonoro o ausenci
 
-\subsection{Detección de Sirenas}
-For all the following experiments, we extracted Mel-Frequency Cepstral Coefficients (MFCC) from audio slices of \SI{20}{\milli\second} with 50\% frame overlap and hamming windowing. As in  work, we computed 40 Mel bands between 0 and \SI{22050}{\Hz} and kept the first 25 coefficients. 
+\subsection{Analítica de Detección de Sirenas}
+Se trata de dos clasificadores anidados, donde en la primer etapa con un modelado del ruido ambiente se detectan anormalidades en el audio para en caso afirmativo pasara a la segunda, en donde se clasifica en sirena o no. Se observa en la figura \ref{fig:deteccion_sirenas}. 
 
 \begin{figure}[h]
 \begin{center}
@@ -117,9 +115,18 @@ For all the following experiments, we extracted Mel-Frequency Cepstral Coefficie
 \end{center}
 \end{figure}
 
-\subsubsection{Features}
-Se utilizan al igual que en la publicacion \cite{Salamon:UrbanSound:ACMMM:14} los coeficientes MFCC (Mel-Frequency Cepstral Coeficients). 
-\subsubsection{Entrenamiento y Clasificación}
+\subsubsection{Substractor de Fondo}
+
+
+
+\subsubsection{Clasificación Sirena}
+
+\subsubsection*{Extracción de Características}
+Se utilizan al igual que en la publicacion \cite{Salamon:UrbanSound:ACMMM:14} los coeficientes MFCC (Mel-Frequency Cepstral Coeficients. 
+
+For all the following experiments, we extracted Mel-Frequency Cepstral Coefficients (MFCC) from audio slices of \SI{20}{\milli\second} with 50\% frame overlap and hamming windowing. As in  work, we computed 40 Mel bands between 0 and \SI{22050}{\Hz} and kept the first 25 coefficients. 
+
+\subsubsection*{Entrenamiento y Clasificación}
 
 
 %----------------------------------------------------------------------------------------
