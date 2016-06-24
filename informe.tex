@@ -124,7 +124,7 @@ Reconocimiento de los eventos anómalos detectados
 \end{item}
 \end{enumerate}
 
-Se trata de dos clasificadores anidados, donde en la primer etapa, con un modelado no supervisado del ruido ambiente se detectan anormalidades en el audio, para en caso afirmativo pasar a la segunda, donde se clasifica en sirena o no. Se observa un esquema de lo dicho anteriormente en la figura \ref{fig:deteccion_sirenas}. 
+Se trata de dos clasificadores anidados con una etapa de integración temporal intermedia. En la primer etapa, con un modelado no supervisado del ruido ambiente se detectan anormalidades en el audio, si existieron los suficientes eventos anómalos según la integración temporal, se pasa a la tercer y última etapa, donde se clasifica en sirena o no. Se observa un esquema de lo dicho anteriormente en la figura \ref{fig:deteccion_sirenas}. 
  
 \begin{figure}[h]
 \begin{center}
@@ -151,12 +151,15 @@ El largo del fragmento es variable permitiendo adaptarse a escenarios complejos,
 
 \subsubsection{Integración temporal}
 
-Previo a la etapa de clasificación de sirena o no, se utiliza un esquema de integración temporal y una medida de distancia para decidir 
+Previo a la etapa de clasificación de sirena o no, se utiliza un esquema de integración temporal y una medida de distancia para decidir si continuar o descartar las muestras de audio.
+
+\smallskip
+Se integran ventanas adyacentes y mediante la distancia binaria de Huffman, con un umbral parametrizable, se define si ese fragmento mayor de audio pasa a la siguiente etapa de clasificación, observar figura \ref{fig:integracion_temporal}. 
 
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=0.8\textwidth]{integracion_temporal} 
-\caption{Esquema de la integración temporal de las ventanas de analisis un fragmento de audio mayor, se ejemplifica con dos valores particulares en segundos. En rojo los audios detectados como no fondo, en blanco los que pertenencen al fondo según la etapa anterior. En (a) se observa un audio que pasa a la segunda etapa de clasificación, en (b) lo contrario.}
+\caption{Esquema de la integración temporal de ventanas adyacentes en un fragmento de audio mayor, se ejemplifica con dos valores particulares en segundos. En rojo los audios detectados como no fondo, en blanco los que pertenencen al fondo según el substractor de fondo. En (a) se observa un audio que pasa a la segunda etapa de clasificación, en (b) lo contrario.}
 \label{fig:integracion_temporal}
 \end{center}
 \end{figure}

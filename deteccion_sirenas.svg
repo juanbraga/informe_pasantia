@@ -14,7 +14,7 @@
    id="svg12890"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="deteccion_sirenas.pdf">
+   sodipodi:docname="deteccion_sirenas.svg">
   <defs
      id="defs12892">
     <marker
@@ -128,7 +128,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -153,7 +153,7 @@
        y="85.387001" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.85057026px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#marker5108);marker-mid:none;marker-end:none"
-       d="m 256.69623,103.70419 -36.76746,0.5145"
+       d="m 254.69623,103.70419 -36.76746,0.5145"
        id="path8533-6"
        inkscape:connector-curvature="0" />
     <flowRoot
@@ -206,17 +206,17 @@
        d="M 464.59354,132.87095 423.28457,105.95666"
        style="fill:none;stroke:#000000;stroke-width:0.60221231px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#marker5108);marker-mid:none;marker-end:none" />
     <rect
-       style="opacity:0.20987657000000001;fill:#6dbd00;fill-opacity:1"
+       style="opacity:0.20987657;fill:#6dbd00;fill-opacity:1"
        id="rect13602"
        width="117.36437"
-       height="73.317612"
-       x="465.36612"
-       y="257.6333" />
+       height="67.256699"
+       x="281.36612"
+       y="169.6333" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot13604"
        style="font-size:13px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       transform="translate(371.80957,-123.7039)"><flowRegion
+       transform="translate(187.80957,-213.7039)"><flowRegion
          id="flowRegion13606"><rect
            id="rect13608"
            width="157.58379"
@@ -277,12 +277,6 @@
        d="m 523.50971,169.10372 -0.52043,-18.69845"
        id="path3072"
        inkscape:connector-curvature="0" />
-    <path
-       inkscape:connector-curvature="0"
-       id="path3076"
-       d="m 523.50971,255.10372 -0.52043,-18.69845"
-       style="fill:none;stroke:#000000;stroke-width:0.75714123px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#marker5108);marker-mid:none;marker-end:none"
-       sodipodi:nodetypes="cc" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot3078"
@@ -293,7 +287,7 @@
            height="167.68532"
            x="446.48743"
            y="410.91531" /></flowRegion><flowPara
-         id="flowPara3084"></flowPara></flowRoot>    <flowRoot
+         id="flowPara3084" /></flowRoot>    <flowRoot
        transform="translate(395.80957,-213.7039)"
        style="font-size:13px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        id="flowRoot3086"
@@ -306,5 +300,10 @@
            id="rect3090"
            style="text-align:center;text-anchor:middle" /></flowRegion><flowPara
          style="font-size:18px;text-align:center;text-anchor:middle"
-         id="flowPara3092">Integración Temporal</flowPara></flowRoot>  </g>
+         id="flowPara3092">Integración Temporal</flowPara></flowRoot>    <path
+       inkscape:connector-curvature="0"
+       id="path3039"
+       d="m 406.02021,203.70867 55.77748,0.50067"
+       style="fill:none;stroke:#000000;stroke-width:1.03345406px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#marker5108);marker-mid:none;marker-end:none" />
+  </g>
 </svg>
