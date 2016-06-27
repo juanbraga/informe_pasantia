@@ -88,12 +88,13 @@ Los sensores para Seguridad Urbana (en particular las cámaras de video y micró
 \smallskip
 
 La plataforma de procesamiento, se puede dividir en dos grandes bloques: por un lado el de genereración de datos de audio y comunicaciones, y por otro la adquisición desde la red y procesamiento para la toma de decisiones, como se observa en la figura \ref{fig:plataforma_procesamiento}.
+\smallskip
 
-De un lado 
+Del lado de la generación de los datos de audio el tipo de micrófono (patrón polar, sensibilidad, etc.) y el codec (frecuencia de muestreo, bitdepth, etc.) a utilizar definen la información sonora que se extrae del escenario monitoreado El tipo de analisis que se pueda hacer va a depender entonces de estos dos bloques.
+\smallskip
 
-El módulo de adquisición hace disponible las muestras de audio, en ventanas de largo configurable según los requerimientos de la algoritmia.
+El módulo de adquisición hace disponible las muestras de audio, en ventanas de largo configurable según los requerimientos del algoritmo. El análisis se hace ventana a ventana (frame by frame en la literatura) y en el caso particular de detección de sirenas (sección: \ref{deteccion de sirenas}), se utiliza una estrategia de integración temporal para aumentar la robustez a falsas alarmas, debidas al analisis local ventana a ventana.
 
-El procesamiento y la toma de decisiones 
 
 \begin{figure}[h]
 \begin{center}
@@ -111,10 +112,32 @@ El procesamiento y la toma de decisiones
 Las analíticas son el modulo de procesamiento de audio que transforman los datos de entrada en una decisión para generar una alarma. Tienen el objetivo de alertar a los operadores del CM ante hechos predefinidos que puedan estar asociados a actividades vandálicas. En esta sección se detalla sobre dos analíticas desarrolladas en la primer etapa del proyecto del software de analíticas de audio. 
 
 \subsection{Analítica de niveles de sonido}
-Tiene como objetivo alertar ante momentos de alto nivel sonoro o ausenci
+Tiene como objetivo alertar ante momentos de alto nivel sonoro o ausencia del mismo. Se hace una estimación de la energía, de la señal de entrada, frame a frame y se umbraliza para generar alertas en niveles energéticos predefinidos por el usuario.
+
+\subsubsection{Medidas de energía utilizadas}
+Se utilizan dos estimaciones de energía para detección de cambios energéticos de distinta naturaleza, por un lado cambios sostenidos en el tiempo y por otro lado los impulsivos.
+
+\subsubsection*{RMS}
+Se utiliza para estimar la energía promedio de la ventana temporal. La ecuación para una ventana de largo N es de la siguiente forma \cite[Chapter~4]{Lerch:2012:IAC:2392638}:
+\begin{equation}
+RMS = \sqrt{\frac{1}{N}\sum_{n=1}^{N} x[n]^2}
+\end{equation}
+
+\subsubsection*{Envolvente de pico}
+Se utiliza para detectar eventos energeticos impulsivos que pueden ser disimulados por el promediadio del valor RMS. El cálculo para una ventana de largo N se realiza de la siguiente forma \cite[Chapter~4]{Lerch:2012:IAC:2392638}:
+\begin{equation}
+PICO = max(x[n])\forall n \in 1..N 
+\end{equation}
+
+\subsubsection{Detección de altos niveles sonoros}
+Para esta analítica se utiliza una estrategia de doble umbral sobre las estimaciones de energía detalladas anteriomente. En primer lugar se aplica al valor RMS de la ventana temporal, siendo útil frente a cambios energéticos sostenidos en el tiempo. Por otro lado se umbraliza el valor de pico, para detectar eventos impulsivos que no sean detectables en el promediado del RMS.
+
+\subsubsection{Detección de bajos niveles sonoros}
+Para la umbralización inferior sólo se trabaja con el valor RMS.
 
 \subsection{Analítica de Detección de Sirenas}
-Se resolvió con el enfoque clásico de procesamiento de audio para Seguridad Urbana de dos etapas, \cite{lecomte2011abnormal}:
+\label{deteccion de sirenas}
+Tiene como objetivo alertar frente a al presencia de una sirena en el audio de analisis. Para esta analítica se utilizó una estrategia de reconocimiento de patrones con el entrenamiento de clasificadores. Se resolvió con el enfoque clásico de reconocimiento de sonidos particulares para Seguridad Urbana de dos etapas, \cite{lecomte2011abnormal}:
 \begin{enumerate}
 \begin{item}
 Detección de eventos anómalos
@@ -141,7 +164,7 @@ En aplicaciones de Seguridad Urbana, para audio y video indistintamente, se util
 El modelado del ruido ambiente con un enfoque supervisado tiene la dificultad de  la generación una base de datos que resuma y caracterice la infinidad de posibilidades que existen en un entorno urbano. Por esta razón se optó por un enfoque no supervisado utilizando One-Class SVM (\cite{rabaoui2008one}, \citep{lecomte2011abnormal}).
 
 \subsubsection*{Extracción de Características}
-Teniendo en cuenta que no se conoce nada a priori sobre le ruido ambiente y además el sistema está basado en un analisis por ventana (en la literatura frame by frame), para la extracción de características se utiliza un banco de filtros lineal para extraer la energía en bandas de frequencia de la transformada de Fourier (Fourier-based linear filterbank \citep{lecomte2011abnormal}).
+Teniendo en cuenta que no se conoce nada a priori sobre le ruido ambiente y además el sistema está basado en un analisis por ventana (en la literatura frame by frame), para la extracción de características se utiliza el enfoque genérico de un banco de filtros lineal, para extraección de la energía en bandas de frequencia de la transformada de Fourier (Fourier-based linear filterbank \citep{lecomte2011abnormal}).
 
 \subsubsection*{Entrenamiento y Clasificación}
 El entrenamiento se realiza en tiempo real, con fragmentos del propio ruido ambiente en donde el sistema se encuentra funcionando. Permite independencia de una base de datos para entrenamiento y robustez frente a cambios naturales en el escenario de analísis, como son la noche y el día por ejemplo. 
@@ -159,7 +182,7 @@ Se integran ventanas adyacentes y mediante la distancia binaria de Huffman, con 
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=0.9\textwidth]{integracion_temporal} 
-\caption{Esquema de la integración temporal de ventanas adyacentes en un fragmento de audio mayor, se ejemplifica con dos valores particulares en segundos. En rojo los audios detectados como no fondo, en blanco los que pertenencen al fondo según el substractor de fondo. En (a) se observa un audio que pasa a la segunda etapa de clasificación, en (b) lo contrario.}
+\caption{Esquema de la integración temporal de ventanas adyacentes en un fragmento de audio mayor, se ejemplifica con dos valores particulares en segundos. En verde los audios detectados como no fondo, en blanco los que pertenencen al fondo según el substractor de fondo. En (a) se observa un audio que pasa a la segunda etapa de clasificación, en (b) caso contrario.}
 \label{fig:integracion_temporal}
 \end{center}
 \end{figure}
@@ -180,13 +203,14 @@ For all the following experiments, we extracted Mel-Frequency Cepstral Coefficie
 
 \section{Conclusions}
 
-The atomic weight of magnesium is concluded to be \SI{24}{\gram\per\mol}, as determined by the stoichiometry of its chemical combination with oxygen. This result is in agreement with the accepted value.
+
 
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
 
+\newpage
 \bibliographystyle{apalike}
 \bibliography{sample}
 
