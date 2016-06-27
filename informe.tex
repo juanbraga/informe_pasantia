@@ -161,7 +161,7 @@ Se trata de dos clasificadores anidados con una etapa de integración temporal i
 En aplicaciones de Seguridad Urbana, para audio y video indistintamente, se utilizan algoritmos de substracción de fondo (en la literatura \textit{Background Substraction}, \cite{Crocco:2016:ASS:2891449.2871183}) como una primer etapa de analisis y conceptualización de la señal de entrada. En otras palabras estos algoritmos modelan los patrones que dominan el ambiente y detectan anormalidades.
 \smallskip 
 
-El modelado del ruido ambiente con un enfoque supervisado tiene la dificultad de  la generación una base de datos que resuma y caracterice la infinidad de posibilidades que existen en un entorno urbano. Por esta razón se optó por un enfoque no supervisado utilizando One-Class SVM (\cite{rabaoui2008one}, \citep{lecomte2011abnormal}).
+El modelado del ruido ambiente con un enfoque supervisado tiene la dificultad de  la generación una base de datos que resuma y caracterice la infinidad de posibilidades que existen en un entorno urbano. Por esta razón se optó por un enfoque de clase unitaria utilizando One-Class SVM (\cite{rabaoui2008one}, \citep{lecomte2011abnormal}).
 
 \subsubsection*{Extracción de Características}
 Teniendo en cuenta que no se conoce nada a priori sobre le ruido ambiente y además el sistema está basado en un analisis por ventana (en la literatura frame by frame), para la extracción de características se utiliza el enfoque genérico de un banco de filtros lineal, para extraección de la energía en bandas de frequencia de la transformada de Fourier (Fourier-based linear filterbank \citep{lecomte2011abnormal}).
@@ -188,21 +188,23 @@ Se integran ventanas adyacentes y mediante la distancia binaria de Huffman, con 
 \end{figure}
  
 \subsubsection{Clasificación Sirena}
+La última etapa es un clasificador One-Class SVM que decide si el evento anómalo sostenido en el tiempo, según las etapas anteriores, clasifica como sirena o no. 
 
 \subsubsection*{Extracción de Características}
-Se utilizan al igual que en la publicacion \cite{Salamon:UrbanSound:ACMMM:14} los coeficientes MFCC (Mel-Frequency Cepstral Coeficients. 
-
-For all the following experiments, we extracted Mel-Frequency Cepstral Coefficients (MFCC) from audio slices of \SI{20}{\milli\second} with 50\% frame overlap and hamming windowing. As in  work, we computed 40 Mel bands between 0 and \SI{22050}{\Hz} and kept the first 25 coefficients. 
+Se utilizan al igual que en la publicacion \cite{Salamon:UrbanSound:ACMMM:14} los primeros 25 coeficientes MFCC (Mel-Frequency Cepstral Coeficients), calculados sobre un banco de filtros Mel de 40 bandas, generado con ventanas temporales de 20ms, 50\% de solapamiento y enventanado hamming. Lo anterior se computa sobre el audio completo que sale de la integración temporal (en la figura \ref{fig:integracion_temporal} se ejemplifica con 4 segundos de audio) y se aplican estadísticas para resumir a un vector de 275 características: máximo, mínimo, media, mediana, varianza, skewness, kurtosis y media y varianza de la primer y segunda derivada de los coefficientes Mel a lo largo del tiempo.
 
 \subsubsection*{Entrenamiento y Clasificación}
-
+Para el entrenamiento se utilizó un enfoque de clase unitaria utilizando One-Class SVM. Para la base de datos se utilizaron audios recopilados de internet y algunas grabaciones hechas en el ambiente de laboratorio y en la calle. 
 
 %----------------------------------------------------------------------------------------
 %	SECTION 4
 %----------------------------------------------------------------------------------------
 
 \section{Conclusiones}
+El trabajo realizado en SONDA Uruguay en el período en cuestión generó sinergia de mis estudios académicos y mi trabajo en el sector privado. El desarrollo de analíticas de audio requiere de habilidades en procesamiento de audio que están vinculadas directamente con mi tema de tesis. Además se procedió con metodologías y herramientas aprendidas en la Maestría en Ingeniería Eléctrica de la Facultad de Ingeniería, como la realización de una revisión bibliográfica de publicaciones cientificas para dominar el estado del arte, y la utilización de herramientas vistas en cursos de la maestría.
+\smallskip
 
+Por otro lado la posibilidad de aplicar directamente los conocimientos obtenidos en la Maestría de Ingeniería Eléctrica a la resolución de un problema particular de la población, generaron motivación tanto para los estudios académicos como para mi rol como ingeniero en la sociedad.  
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY
