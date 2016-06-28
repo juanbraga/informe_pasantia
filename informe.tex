@@ -30,7 +30,7 @@
 %	DOCUMENT INFORMATION
 %----------------------------------------------------------------------------------------
 
-\title{\textbf{Desarrollo de módulo de procesamiento de audio en tiempo real con aplicación a seguridad urbana}\\ \textsc{Pasantía Laboral en SONDA Uruguay}\\
+\title{\textbf{Desarrollo de plataforma de procesamiento de audio en tiempo real con aplicación a seguridad urbana}\\ \textsc{Pasantía Laboral en SONDA Uruguay}\\
 \large \textsc{Maestría en Ingeniería Eléctrica} del \textit{Instituto de Ingeniería Eléctrica, Facultad de Ingeniería, Universidad de la República, Uruguay.}}
 
 \author{\textit{Ing. Juan Braga}}
@@ -55,7 +55,7 @@
 %----------------------------------------------------------------------------------------
 
 \begin{abstract}
-El presente informe tiene como objetivo la documentación de la etapa de estudio del estado del arte y pruebas de concepto sobre analíticas de audio en tiempo real para seguridad urbana, realizada en SONDA Uruguay en el período de Diciembre 2015 a Marzo 2016 para su aprobación en créditos de la Maestría en Ingeniería Eléctrica de la UdelaR. Se detalla sobre los algoritmos implementados en ambiente de laboratorio, para prueba de concepto de dos analíticas en particular: Detección de Niveles Predefinidos de Sonido y Detección de Sirenas. 
+El presente informe tiene como objetivo la documentación del trabajo realizado en SONDA Uruguay en el período de Diciembre 2015 a Marzo 2016 para su aprobación en créditos de la Maestría en Ingeniería Eléctrica de la UdelaR. Se trató de un estudio del estado del arte sobre la aplicación de analíticas a seguridad urbana y el desarrollo de una plataforma de procesamiento de audio en tiempo real para prueba de concepto en condiciones de laboratorio. En lo que sigue se detalla sobre el desarrollo realizado así como los algoritmos utilizados, con referencias a publicaciones cientificas, para la implementación de dos analíticas de audio en particular. 
 \end{abstract}
 
 %----------------------------------------------------------------------------------------
@@ -63,23 +63,21 @@ El presente informe tiene como objetivo la documentación de la etapa de estudio
 %----------------------------------------------------------------------------------------
 
 \section{Introducción}
-El monitoreo en tiempo real de las actividades humanas para Seguridad Urbana se ha vuelto masivo con el pasar de los últimos años a nivel mundial. La cantidad de sensores distribuidos por las ciudadades ha crecido enormemente. Es en los centros de monitoreo, donde confluyen los sensores colocados por la ciudad, que surge la necesidad de automatizar los procesos de visualización y control para hacer la operativa más eficiente \citep{Crocco:2016:ASS:2891449.2871183}. En este escenario es donde SONDA Uruguay motiva el desarrollo de un software de analíticas de audio y video, para el monitoreo automático en tiempo real de los espacios urbanos.  
+El monitoreo en tiempo real de las actividades humanas para seguridad urbana se ha vuelto masivo en los últimos años a nivel mundial. La cantidad de sensores distribuidos por las ciudadades ha crecido enormemente. Es entonces en los centros de monitoreo, donde confluyen los sensores colocados por la ciudad, que surge la necesidad de automatizar los procesos de visualización y control para hacer la operativa más eficiente \citep{Crocco:2016:ASS:2891449.2871183}. El desarrollo de analíticas en tiempo real para detección automática de patrones de interés, ha captado la atención de la comunidad cientifica así como a empresas con fines comerciales. En este escenario es donde la empresa SONDA Uruguay motiva un proyecto de desarrollo de software de analíticas de audio y video, para el monitoreo automático en tiempo real de los espacios urbanos.  
 
 \smallskip
-Luego de 
+En el marco del proyecto de la empresa anteriormente mencionado, se realizó una prueba de concepto sobre la implementación de analíticas de audio en tiempo real para seguridad urbana. Con este fin se realizó un estudio del estado del arte para luego seguir con el desarrollo de una plataforma de procesamiento de audio a nivel de laboratorio. 
+
+\smallskip
+En lo que sigue el documento está dividido en tres secciones. En la Sección \ref{PP} se detalla sobre la plataforma de procesamiento desarrollada. En la Sección \ref{analiticas} los algoritmos utilizados para la implementación de dos anaĺiticas de audio particulares: Detección de Niveles Predefinidios de Sonido y Detección de Sirenas. Por último en la Sección \ref{concl} una breve reflexión sobre la sinergia de la pasantía laboral y los estudios de académicos en particular con el tema de tesis, en el marco de la Maestría de Ingeniería Eléctrica actualmente en curso.  
 
 \subsection{Sobre SONDA Uruguay}
-SONDA Uruguay S.A. es fundamentalmente una empresa de servicios y proyectos de integracion de sistemas y provision de plataformas en el campo de las tecnologías de la información. Actualmente SONDA Uruguay S.A. está trabajando en proyectos de I+D en el area de tratamiento de señales, particularmente audio y video. 
+SONDA Uruguay es fundamentalmente una empresa de servicios, proyectos de integracion de sistemas y provision de plataformas en el campo de las tecnologías de la información. Actualmente la empresa está incorporando proyectos de I+D en el area de tratamiento de señales. Tal es el caso del proyecto de desarrollo de analíticas de audio y video en tiempo real con aplicación a seguridad urbana. En el mismo, se encuentran involucrados ocho personas, profesionales y estudiantes de Ingeniería en Sistemas y Eléctrica, que complementan la rama de computación científica con el manejo de arquitectura de software para aplicaciones críticas de gran volúmen de datos.  
 
-\subsection{Sobre el equipo de trabajo}
-El equipo de desarrollo en su totalidad esta conformado por 8 personas, profesionales y estudiantes de Ingeniería en Sistemas y Eléctrica, que complementan la rama de computación científica con las buenas prácticas de programación y manejo de arquitectura de software para aplicaciones críticas de gran volúmen de datos.  
+\subsection{Sobre el grado de avance del proyecto}                            
+Al día de hoy el software de analíticas forma parte de la tecnología implantada en el Centro de Monitoreo (CM) del Ministerio del Interior, en el proyecto Ciudad Segura. La versión actual cuenta únicamente con analíticas basadas en el procesamiento de la señal de video. Es utilizado para apoyar la operativa de los visualizadores del CM, alertando automáticamente frente a eventos de interés predefinidos, mediante el procesamiento de señales en tiempo real.  
 
-\subsection{Sobre el software de analíticas para seguridad urbana}                            
-El software de analíticas actualmente forma parte de la tecnología implantada en el Centro de Monitoreo (CM) del Ministerio del Interior, en el proyecto Ciudad Segura. Tiene como objetivo apoyar la operativa de los visualizadores del CM, alertando automáticamente frente a eventos de interés predefinidos, mediante el procesamiento de señales en tiempo real.  
 
-\bigskip
-En lo que sigue se detallará sobre los algoritmos implementados para la prueba de concepto de procesamiento de audio en tiempo real, para funcionamiento embebido en dicho software. Sin embargo, no tiene como objetivo este documento, especificar puntos particulares que atenten contra la privacidad de la empresa y del producto comercial. 
- 
 %----------------------------------------------------------------------------------------
 %	SECTION 2
 %----------------------------------------------------------------------------------------
@@ -111,6 +109,7 @@ El módulo de adquisición hace disponible las muestras de audio, en ventanas de
 %----------------------------------------------------------------------------------------
 
 \section{Analíticas}
+\label{analiticas}
 Las analíticas son el modulo de procesamiento de audio que transforman los datos de entrada en una decisión para generar una alarma. Tienen el objetivo de alertar a los operadores del CM ante hechos predefinidos que puedan estar asociados a actividades vandálicas. En esta sección se detalla sobre dos analíticas desarrolladas en la primer etapa del proyecto del software de analíticas de audio. 
 
 \subsection{Analítica de Detección de Niveles Predefinidos de Sonido}
@@ -203,10 +202,11 @@ Para el entrenamiento se utilizó un enfoque de clase unitaria utilizando One-Cl
 %----------------------------------------------------------------------------------------
 
 \section{Conclusiones}
-El trabajo realizado en SONDA Uruguay en el período en cuestión generó sinergia de mis estudios académicos y mi trabajo en el sector privado. El desarrollo de analíticas de audio requiere de habilidades en procesamiento de audio que están vinculadas directamente con mi tema de tesis. Además se procedió con metodologías y herramientas aprendidas en la Maestría en Ingeniería Eléctrica de la Facultad de Ingeniería, como la realización de una revisión bibliográfica de publicaciones cientificas para dominar el estado del arte, y la utilización de herramientas vistas en cursos de la maestría.
+\label{concl}
+La pasantía laboral generó sinergia de mis estudios académicos y mi trabajo en el sector privado. El desarrollo de analíticas de audio requiere de habilidades en procesamiento de audio que están vinculadas directamente con mi tema de tesis. Además se procedió con metodologías y herramientas aprendidas en la Maestría en Ingeniería Eléctrica de la Facultad de Ingeniería, como la realización de una revisión bibliográfica de publicaciones cientificas para dominar el estado del arte, y la utilización de herramientas vistas en cursos de la maestría.
 \smallskip
 
-Por otro lado la posibilidad de aplicar directamente los conocimientos obtenidos en la Maestría de Ingeniería Eléctrica a la resolución de un problema particular de la población, generaron motivación tanto para los estudios académicos como para mi rol como ingeniero en la sociedad.  
+Por otro lado la posibilidad de aplicar directamente los conocimientos obtenidos en la Maestría de Ingeniería Eléctrica a la resolución de un problema particular con aplicación práctica, generó motivación tanto para los estudios académicos como para mi rol como ingeniero en la sociedad.  
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY
