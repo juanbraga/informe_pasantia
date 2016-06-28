@@ -55,7 +55,7 @@
 %----------------------------------------------------------------------------------------
 
 \begin{abstract}
-El presente informe tiene como objetivo la documentación del desarrollo realizado en SONDA Uruguay en el período de Diciembre 2015 a Marzo 2016, para su aprobación en créditos de la Maestría en Ingeniería Eléctrica de la UdelaR. Se detalla sobre un módulo de procesamiento de audio en tiempo real, para funcionamiento embebido en un software de analíticas para seguridad urbana, desarrollado en su totalidad por el equipo de Ingenieros de SONDA Uruguay. 
+El presente informe tiene como objetivo la documentación de la etapa de estudio del estado del arte y pruebas de concepto sobre analíticas de audio en tiempo real para seguridad urbana, realizada en SONDA Uruguay en el período de Diciembre 2015 a Marzo 2016 para su aprobación en créditos de la Maestría en Ingeniería Eléctrica de la UdelaR. Se detalla sobre los algoritmos implementados en ambiente de laboratorio, para prueba de concepto de dos analíticas en particular: Detección de Niveles Predefinidos de Sonido y Detección de Sirenas. 
 \end{abstract}
 
 %----------------------------------------------------------------------------------------
@@ -63,7 +63,10 @@ El presente informe tiene como objetivo la documentación del desarrollo realiza
 %----------------------------------------------------------------------------------------
 
 \section{Introducción}
-El monitoreo en tiempo real de las actividades humanas para Seguridad Urbana se ha vuelto masivo con el pasar de los últimos años a nivel mundial. La cantidad de sensores distribuidos por las ciudadades ha crecido enormemente. Es en los centros de monitoreo, donde confluyen los sensores colocados por la ciudad, que surge la necesidad de automatizar los procesos de visualización y control para hacer la operativa más eficiente \citep{Crocco:2016:ASS:2891449.2871183}. En este escenario es donde SONDA Uruguay motiva el desarrollo de un software de analíticas de audio y video, para el monitoreo automático en tiempo real de los espacios urbanos.   
+El monitoreo en tiempo real de las actividades humanas para Seguridad Urbana se ha vuelto masivo con el pasar de los últimos años a nivel mundial. La cantidad de sensores distribuidos por las ciudadades ha crecido enormemente. Es en los centros de monitoreo, donde confluyen los sensores colocados por la ciudad, que surge la necesidad de automatizar los procesos de visualización y control para hacer la operativa más eficiente \citep{Crocco:2016:ASS:2891449.2871183}. En este escenario es donde SONDA Uruguay motiva el desarrollo de un software de analíticas de audio y video, para el monitoreo automático en tiempo real de los espacios urbanos.  
+
+\smallskip
+Luego de 
 
 \subsection{Sobre SONDA Uruguay}
 SONDA Uruguay S.A. es fundamentalmente una empresa de servicios y proyectos de integracion de sistemas y provision de plataformas en el campo de las tecnologías de la información. Actualmente SONDA Uruguay S.A. está trabajando en proyectos de I+D en el area de tratamiento de señales, particularmente audio y video. 
@@ -71,12 +74,11 @@ SONDA Uruguay S.A. es fundamentalmente una empresa de servicios y proyectos de i
 \subsection{Sobre el equipo de trabajo}
 El equipo de desarrollo en su totalidad esta conformado por 8 personas, profesionales y estudiantes de Ingeniería en Sistemas y Eléctrica, que complementan la rama de computación científica con las buenas prácticas de programación y manejo de arquitectura de software para aplicaciones críticas de gran volúmen de datos.  
 
-\subsection{Sobre el software de analíticas de audio y video}
-El software de analíticas actualmente forma parte de la tecnología implantada en el Centro de Monitoreo (CM) del Ministerio del Interior, en el proyecto Ciudad Segura.  Tiene como objetivo apoyar la operativa de los visualizadores del CM, alertando automáticamente frente a eventos de interés predefinidos, mediante el procesamiento de Audio y Video en tiempo real.  
+\subsection{Sobre el software de analíticas para seguridad urbana}                            
+El software de analíticas actualmente forma parte de la tecnología implantada en el Centro de Monitoreo (CM) del Ministerio del Interior, en el proyecto Ciudad Segura. Tiene como objetivo apoyar la operativa de los visualizadores del CM, alertando automáticamente frente a eventos de interés predefinidos, mediante el procesamiento de señales en tiempo real.  
 
 \bigskip
-
-En lo que sigue se detallará sobre el módulo de procesamiento de audio en tiempo real, para funcionamiento embebido en dicho software. Sin embargo, no tiene como objetivo este documento, especificar puntos particulares que atenten contra la privacidad de la empresa y del producto comercial. 
+En lo que sigue se detallará sobre los algoritmos implementados para la prueba de concepto de procesamiento de audio en tiempo real, para funcionamiento embebido en dicho software. Sin embargo, no tiene como objetivo este documento, especificar puntos particulares que atenten contra la privacidad de la empresa y del producto comercial. 
  
 %----------------------------------------------------------------------------------------
 %	SECTION 2
@@ -87,7 +89,7 @@ En lo que sigue se detallará sobre el módulo de procesamiento de audio en tiem
 Los sensores para Seguridad Urbana (en particular las cámaras de video y micrófonos) son diseñados para trabajar en tiempo real, transmitiendo a traves de una red IP los datos adquiridos, a una central donde se realiza el monitoreo y la toma de decisiones. Es en este escenario donde los algoritmos de procesamiento de audio se encuentran embebidos y los tiempos de procesamiento no deben exceder la cadencia de disponibilidad de datos.
 \smallskip
 
-La plataforma de procesamiento, se puede dividir en dos grandes bloques: por un lado el de genereración de datos de audio y comunicaciones, y por otro la adquisición desde la red y procesamiento para la toma de decisiones, como se observa en la figura \ref{fig:plataforma_procesamiento}.
+La plataforma de procesamiento, se puede dividir en dos grandes bloques: por un lado el de genereración de datos de audio y comunicaciones, y por otro la adquisición desde la red y procesamiento para la toma de decisiones, como se observa en la Figura \ref{fig:plataforma_procesamiento}.
 \smallskip
 
 Del lado de la generación de los datos de audio el tipo de micrófono (patrón polar, sensibilidad, etc.) y el codec (frecuencia de muestreo, bitdepth, etc.) a utilizar definen la información sonora que se extrae del escenario monitoreado El tipo de analisis que se pueda hacer va a depender entonces de estos dos bloques.
@@ -111,7 +113,7 @@ El módulo de adquisición hace disponible las muestras de audio, en ventanas de
 \section{Analíticas}
 Las analíticas son el modulo de procesamiento de audio que transforman los datos de entrada en una decisión para generar una alarma. Tienen el objetivo de alertar a los operadores del CM ante hechos predefinidos que puedan estar asociados a actividades vandálicas. En esta sección se detalla sobre dos analíticas desarrolladas en la primer etapa del proyecto del software de analíticas de audio. 
 
-\subsection{Analítica de niveles de sonido}
+\subsection{Analítica de Detección de Niveles Predefinidos de Sonido}
 Tiene como objetivo alertar ante momentos de alto nivel sonoro o ausencia del mismo. Se hace una estimación de la energía, de la señal de entrada, frame a frame y se umbraliza para generar alertas en niveles energéticos predefinidos por el usuario.
 
 \subsubsection{Medidas de energía utilizadas}
@@ -147,7 +149,7 @@ Reconocimiento de los eventos anómalos detectados
 \end{item}
 \end{enumerate}
 
-Se trata de dos clasificadores anidados con una etapa de integración temporal intermedia. En la primer etapa, con un modelado no supervisado del ruido ambiente se detectan anormalidades en el audio, si existieron los suficientes eventos anómalos según la integración temporal, se pasa a la tercer y última etapa, donde se clasifica en sirena o no. Se observa un esquema de lo dicho anteriormente en la figura \ref{fig:deteccion_sirenas}. 
+Se trata de dos clasificadores anidados con una etapa de integración temporal intermedia. En la primer etapa, con un modelado no supervisado del ruido ambiente se detectan anormalidades en el audio, si existieron los suficientes eventos anómalos según la integración temporal, se pasa a la tercer y última etapa, donde se clasifica en sirena o no. Se observa un esquema de lo dicho anteriormente en la Figura \ref{fig:deteccion_sirenas}. 
  
 \begin{figure}[h]
 \begin{center}
@@ -158,7 +160,7 @@ Se trata de dos clasificadores anidados con una etapa de integración temporal i
 \end{figure}
 
 \subsubsection{Substractor de Fondo}
-En aplicaciones de Seguridad Urbana, para audio y video indistintamente, se utilizan algoritmos de substracción de fondo (en la literatura \textit{Background Substraction}, \cite{Crocco:2016:ASS:2891449.2871183}) como una primer etapa de analisis y conceptualización de la señal de entrada. En otras palabras estos algoritmos modelan los patrones que dominan el ambiente y detectan anormalidades.
+En aplicaciones de Seguridad Urbana, se utilizan algoritmos de substracción de fondo (en la literatura \textit{Background Substraction}, \cite{Crocco:2016:ASS:2891449.2871183}) como una primer etapa de analisis y conceptualización de la señal de entrada. En otras palabras estos algoritmos modelan los patrones que dominan el ambiente y detectan anormalidades.
 \smallskip 
 
 El modelado del ruido ambiente con un enfoque supervisado tiene la dificultad de  la generación una base de datos que resuma y caracterice la infinidad de posibilidades que existen en un entorno urbano. Por esta razón se optó por un enfoque de clase unitaria utilizando One-Class SVM (\cite{rabaoui2008one}, \citep{lecomte2011abnormal}).
@@ -177,7 +179,7 @@ El largo del fragmento es variable permitiendo adaptarse a escenarios complejos,
 Previo a la etapa de clasificación de sirena o no, se utiliza un esquema de integración temporal y una medida de distancia para decidir si continuar o descartar las muestras de audio.
 
 \smallskip
-Se integran ventanas adyacentes y mediante la distancia binaria de Huffman, con un umbral parametrizable, se define si ese fragmento mayor de audio pasa a la siguiente etapa de clasificación, observar figura \ref{fig:integracion_temporal}. 
+Se integran ventanas adyacentes y mediante la distancia binaria de Huffman, con un umbral parametrizable, se define si ese fragmento mayor de audio pasa a la siguiente etapa de clasificación, observar Figura \ref{fig:integracion_temporal}. 
 
 \begin{figure}[h]
 \begin{center}
@@ -191,7 +193,7 @@ Se integran ventanas adyacentes y mediante la distancia binaria de Huffman, con 
 La última etapa es un clasificador One-Class SVM que decide si el evento anómalo sostenido en el tiempo, según las etapas anteriores, clasifica como sirena o no. 
 
 \subsubsection*{Extracción de Características}
-Se utilizan al igual que en la publicacion \cite{Salamon:UrbanSound:ACMMM:14} los primeros 25 coeficientes MFCC (Mel-Frequency Cepstral Coeficients), calculados sobre un banco de filtros Mel de 40 bandas, generado con ventanas temporales de 20ms, 50\% de solapamiento y enventanado hamming. Lo anterior se computa sobre el audio completo que sale de la integración temporal (en la figura \ref{fig:integracion_temporal} se ejemplifica con 4 segundos de audio) y se aplican estadísticas para resumir a un vector de 275 características: máximo, mínimo, media, mediana, varianza, skewness, kurtosis y media y varianza de la primer y segunda derivada de los coefficientes Mel a lo largo del tiempo.
+Se utilizan al igual que en la publicacion \cite{Salamon:UrbanSound:ACMMM:14} los primeros 25 coeficientes MFCC (Mel-Frequency Cepstral Coeficients), calculados sobre un banco de filtros Mel de 40 bandas, generado con ventanas temporales de 20ms, 50\% de solapamiento y enventanado hamming. Lo anterior se computa sobre el audio completo que sale de la integración temporal (en la Figura \ref{fig:integracion_temporal} se ejemplifica con 4 segundos de audio) y se aplican estadísticas para resumir a un vector de 275 características: máximo, mínimo, media, mediana, varianza, skewness, kurtosis y media y varianza de la primer y segunda derivada de los coefficientes Mel a lo largo del tiempo.
 
 \subsubsection*{Entrenamiento y Clasificación}
 Para el entrenamiento se utilizó un enfoque de clase unitaria utilizando One-Class SVM. Para la base de datos se utilizaron audios recopilados de internet y algunas grabaciones hechas en el ambiente de laboratorio y en la calle. 
