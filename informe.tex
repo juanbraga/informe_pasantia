@@ -14,11 +14,12 @@
 \usepackage[version=3]{mhchem} % Package for chemical equation typesetting
 \usepackage{siunitx} % Provides the \SI{}{} and \si{} command for typesetting SI units
 \usepackage[spanish]{babel}
-\selectlanguage{spanish}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx} % Required for the inclusion of images
 \usepackage{natbib} % Required to change bibliography style to APA
 \usepackage{amsmath} % Required for some math elements 
+
+\selectlanguage{spanish}
 
 \setlength\parindent{0pt} % Removes all indentation from paragraphs
 
@@ -63,7 +64,7 @@ El presente informe tiene como objetivo la documentación del trabajo realizado 
 %----------------------------------------------------------------------------------------
 
 \section{Introducción}
-El monitoreo en tiempo real de las actividades humanas para seguridad urbana se ha vuelto masivo en los últimos años a nivel mundial. La cantidad de sensores distribuidos por las ciudades ha crecido enormemente. Es entonces en los centros de monitoreo, donde confluyen las señales de los rincones de la ciudad, que surge la necesidad de automatizar los procesos de visualización y control para hacer la operativa más eficiente \citep{Crocco:2016:ASS:2891449.2871183}. El desarrollo de analíticas en tiempo real para detección automática de patrones de interés, ha captado la atención de la comunidad científica así como a empresas con fines comerciales. En este escenario es donde la empresa SONDA Uruguay motiva un proyecto de desarrollo de software de analíticas de audio y video, para el monitoreo automático en tiempo real de los espacios urbanos.  
+El monitoreo en tiempo real de las actividades humanas para seguridad urbana se ha vuelto masivo en los últimos años a nivel mundial. La cantidad de sensores distribuidos por las ciudades ha crecido enormemente. Es entonces en los centros de monitoreo, donde confluyen las señales desde variados puntos de la ciudad, que surge la necesidad de automatizar los procesos de visualización y control para hacer la operativa más eficiente \citep{Crocco:2016:ASS:2891449.2871183}. El desarrollo de analíticas en tiempo real para detección automática de patrones de interés, ha captado la atención de la comunidad científica así como a empresas con fines comerciales. En este escenario es donde la empresa SONDA Uruguay motiva un proyecto de desarrollo de software de analíticas de audio y video, para el monitoreo automático en tiempo real de los espacios urbanos.  
 
 \smallskip
 En el marco del proyecto de la empresa anteriormente mencionado, se realizó una prueba de concepto sobre la implementación de analíticas de audio en tiempo real para seguridad urbana. Con este fin se realizó un estudio del estado del arte para luego seguir con el desarrollo de una plataforma de procesamiento de audio a nivel de laboratorio. 
@@ -85,8 +86,8 @@ Al día de hoy el software de analíticas forma parte de la tecnología implanta
 \section{Plataforma de procesamiento}
 \label{PP}
 Los sensores para Seguridad Urbana (en particular las cámaras de video y micrófonos) son diseñados para trabajar en tiempo real, transmitiendo a través de una red IP los datos adquiridos, a una central donde se realiza el monitoreo y la toma de decisiones. Es en este escenario donde los algoritmos de procesamiento de audio se encuentran embebidos y los tiempos de procesamiento no deben exceder la cadencia de disponibilidad de datos.
-\smallskip
 
+\smallskip
 La plataforma de procesamiento, se puede dividir en dos grandes bloques: por un lado el de genereración de datos de audio y comunicaciones, y por otro la adquisición desde la red y procesamiento para la toma de decisiones, como se observa en la Figura \ref{fig:plataforma_procesamiento}.
 \smallskip
 
@@ -110,10 +111,10 @@ El módulo de adquisición hace disponible las muestras de audio, en ventanas de
 
 \section{Analíticas}
 \label{analiticas}
-Las analíticas son el modulo de procesamiento de audio que transforman los datos de entrada en una decisión para generar una alarma. Tienen el objetivo de alertar a los operadores del CM ante hechos predefinidos que puedan estar asociados a actividades vandálicas. En esta sección se detalla sobre dos analíticas desarrolladas en la primer etapa del proyecto del software de analíticas de audio. 
+Las analíticas son el modulo de procesamiento de audio que transforman los datos de entrada en una decisión para generar una alarma. Tienen el objetivo de alertar a los operadores del CM ante hechos predefinidos que puedan estar asociados a actividades vandálicas. En esta sección se describe sobre dos analíticas desarrolladas en la primer etapa del proyecto de desarrollo del software de analíticas de audio. 
 
 \subsection{Analítica de Detección de Niveles Predefinidos de Sonido}
-Tiene como objetivo alertar ante momentos de alto nivel sonoro o ausencia del mismo. Se hace una estimación de la energía, de la señal de entrada, frame a frame y se umbraliza para generar alertas en niveles energéticos predefinidos por el usuario.
+Tiene como objetivo alertar la presencia de momentos de alto nivel sonoro o ausencia del mismo. Se hace una estimación de la energía, de la señal de entrada, frame a frame y se umbraliza para generar alertas en niveles energéticos predefinidos por el usuario.
 
 \subsubsection{Medidas de energía utilizadas}
 Se utilizan dos estimaciones de energía para detección de cambios energéticos de distinta naturaleza, por un lado cambios sostenidos en el tiempo y por otro lado los impulsivos.
@@ -162,10 +163,10 @@ Se trata de dos clasificadores anidados con una etapa de integración temporal i
 En aplicaciones de Seguridad Urbana, se utilizan algoritmos de substracción de fondo (en la literatura \textit{Background Substraction}, \cite{Crocco:2016:ASS:2891449.2871183}) como una primer etapa de análisis y conceptualización de la señal de entrada. En otras palabras estos algoritmos modelan los patrones que dominan el ambiente y detectan anormalidades.
 \smallskip 
 
-El modelado del ruido ambiente con un enfoque supervisado tiene la dificultad de  la generación una base de datos que resuma y caracterice la infinidad de posibilidades que existen en un entorno urbano. Por esta razón se optó por un enfoque de clase unitaria utilizando One-Class SVM (\cite{rabaoui2008one}, \citep{lecomte2011abnormal}).
+El modelado del ruido ambiente con un enfoque supervisado tiene la dificultad de la generación de una base de datos que resuma y caracterice la infinidad de posibilidades que existen en un entorno urbano. Por esta razón se optó por un enfoque de clase unitaria utilizando One-Class SVM (\cite{rabaoui2008one}, \citep{lecomte2011abnormal}).
 
 \subsubsection*{Extracción de Características}
-Teniendo en cuenta que no se conoce nada a priori sobre le ruido ambiente y además el sistema está basado en un análisis por ventana (en la literatura frame by frame), para la extracción de características se utiliza el enfoque genérico de un banco de filtros lineal, para extracción de la energía en bandas de frequencia de la transformada de Fourier (Fourier-based linear filterbank \citep{lecomte2011abnormal}).
+Teniendo en cuenta que no se conoce nada a priori sobre el ruido ambiente y además el sistema está basado en un análisis por ventana (en la literatura frame by frame), para la extracción de características se utiliza el enfoque genérico de un banco de filtros lineal, para extracción de la energía en bandas de frequencia de la transformada de Fourier (Fourier-based linear filterbank \citep{lecomte2011abnormal}).
 
 \subsubsection*{Entrenamiento y Clasificación}
 El entrenamiento se realiza en tiempo real, con fragmentos del propio ruido ambiente en donde el sistema se encuentra funcionando. Permite independencia de una base de datos para entrenamiento y robustez frente a cambios naturales en el escenario de análisis, como son la noche y el día por ejemplo. 
