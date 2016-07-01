@@ -13,13 +13,13 @@
 
 \usepackage[version=3]{mhchem} % Package for chemical equation typesetting
 \usepackage{siunitx} % Provides the \SI{}{} and \si{} command for typesetting SI units
+
 \usepackage[spanish]{babel}
+\selectlanguage{spanish}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx} % Required for the inclusion of images
 \usepackage{natbib} % Required to change bibliography style to APA
 \usepackage{amsmath} % Required for some math elements 
-
-\selectlanguage{spanish}
 
 \setlength\parindent{0pt} % Removes all indentation from paragraphs
 
@@ -70,7 +70,7 @@ El monitoreo en tiempo real de las actividades humanas para seguridad urbana se 
 En el marco del proyecto de la empresa anteriormente mencionado, se realizó una prueba de concepto sobre la implementación de analíticas de audio en tiempo real para seguridad urbana. Con este fin se realizó un estudio del estado del arte para luego seguir con el desarrollo de una plataforma de procesamiento de audio a nivel de laboratorio. 
 
 \smallskip
-En lo que sigue el documento está dividido en tres secciones. En la Sección \ref{PP} se detalla sobre la plataforma de procesamiento desarrollada. En la Sección \ref{analíticas} los algoritmos utilizados para la implementación de dos analíticas de audio particulares: Detección de Niveles Predefinidos de Sonido y Detección de Sirenas. Por último en la Sección \ref{concl} una breve reflexión sobre la sinergia de la pasantía laboral y los estudios de académicos principalmente el tema de tesis, en el marco de la Maestría de Ingeniería Eléctrica actualmente en curso.  
+En lo que sigue el documento está dividido en tres secciones. En la Sección \ref{PP} se detalla sobre la plataforma de procesamiento desarrollada. En la Sección \ref{analiticas} los algoritmos utilizados para la implementación de dos analíticas de audio particulares: Detección de Niveles Predefinidos de Sonido y Detección de Sirenas. Por último en la Sección \ref{concl} una breve reflexión sobre la sinergia de la pasantía laboral y los estudios de académicos principalmente el tema de tesis, en el marco de la Maestría de Ingeniería Eléctrica actualmente en curso.  
 
 \subsection{Sobre SONDA Uruguay}
 SONDA Uruguay es fundamentalmente una empresa de servicios, proyectos de integración de sistemas y provisión de plataformas en el campo de las tecnologías de la información. Actualmente la empresa está incorporando proyectos de I+D en el área de tratamiento de señales. Tal es el caso del proyecto de desarrollo de analíticas de audio y video en tiempo real con aplicación a seguridad urbana. En el mismo, se encuentran involucradas ocho personas, profesionales y estudiantes de Ingeniería de Sistemas y Eléctrica, que complementan la rama de computación científica con el manejo de la ingeniería de software para aplicaciones críticas de gran volumen de datos.  
@@ -94,7 +94,7 @@ La plataforma de procesamiento, se puede dividir en dos grandes bloques: por un 
 Del lado de la generación de los datos de audio el tipo de micrófono (patrón polar, sensibilidad, etc.) y el codec (frecuencia de muestreo, bitdepth, etc.) a utilizar definen la información sonora que se extrae del escenario monitoreado El tipo de análisis que se pueda hacer va a depender entonces de estos dos bloques.
 \smallskip
 
-El módulo de adquisición hace disponible las muestras de audio, en ventanas de largo configurable según los requerimientos del algoritmo. El análisis se hace ventana a ventana (frame by frame en la literatura) y en el caso particular de detección de sirenas (sección: \ref{detección de sirenas}), se utiliza una estrategia de integración temporal para aumentar la robustez a falsas alarmas, debidas al análisis local ventana a ventana.
+El módulo de adquisición hace disponible las muestras de audio, en ventanas de largo configurable según los requerimientos del algoritmo. El análisis se hace ventana a ventana (frame by frame en la literatura) y en el caso particular de detección de sirenas (sección: \ref{deteccion de sirenas}), se utiliza una estrategia de integración temporal para aumentar la robustez a falsas alarmas, debidas al análisis local ventana a ventana.
 
 
 \begin{figure}[h]
@@ -212,6 +212,7 @@ Por otro lado la posibilidad de aplicar directamente los conocimientos obtenidos
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
+
 
 \newpage
 \bibliographystyle{apalike}
