@@ -58,7 +58,7 @@
 %----------------------------------------------------------------------------------------
 
 \begin{abstract}
-El presente informe tiene como objetivo la documentación del trabajo realizado en SONDA Uruguay en el período de Diciembre 2015 a Marzo 2016 para su aprobación en créditos de la Maestría en Ingeniería Eléctrica de la UdelaR. Se trató de un estudio del estado del arte sobre la aplicación de analíticas a seguridad urbana y el desarrollo de una plataforma de procesamiento de audio en tiempo real para prueba de concepto en condiciones de laboratorio de dos analíticas de audio en particular, 
+El presente informe tiene como objetivo la documentación del trabajo realizado en SONDA Uruguay en el período de Diciembre 2015 a Marzo 2016 para su aprobación en créditos de la Maestría en Ingeniería Eléctrica de la UdelaR. Se trató de un estudio del estado del arte en la aplicación de analíticas de audio a seguridad urbana y el desarrollo de una plataforma de procesamiento en tiempo real para prueba de concepto en condiciones de laboratorio. Dejando como resultado la implementación de dos analíticas particulares y su desempeño en una base de datos pública.
 \end{abstract}
 
 %----------------------------------------------------------------------------------------
@@ -66,13 +66,13 @@ El presente informe tiene como objetivo la documentación del trabajo realizado 
 %----------------------------------------------------------------------------------------
 
 \section{Introducción}
-El monitoreo en tiempo real de las actividades humanas para seguridad urbana se ha vuelto masivo en los últimos años a nivel mundial. La cantidad de sensores distribuidos por las ciudades ha crecido enormemente. Es entonces en los centros de monitoreo, donde confluyen las señales desde variados puntos de la ciudad, que surge la necesidad de automatizar los procesos de visualización y control para hacer la operativa más eficiente \citep{crocco2014audio}. El desarrollo de analíticas en tiempo real para detección automática de patrones de interés, ha captado la atención de la comunidad científica así como a empresas con fines comerciales. En este escenario es donde la empresa SONDA Uruguay motiva un proyecto de desarrollo de software de analíticas de audio y video, para el monitoreo automático en tiempo real de los espacios urbanos.  
+El monitoreo en tiempo real de actividades humanas para seguridad urbana se ha vuelto masivo en los últimos años a nivel mundial. La cantidad de sensores distribuidos por las ciudades ha crecido enormemente. Es entonces en los centros de monitoreo, donde confluyen las señales desde variados puntos de la ciudad, que surge la necesidad de automatizar los procesos de visualización y control para hacer la operativa más eficiente \citep{crocco2014audio}. El desarrollo de analíticas en tiempo real para detección automática de patrones de interés, ha captado la atención de la comunidad científica así como a empresas con fines comerciales. En este escenario es donde la empresa SONDA Uruguay motiva un proyecto de desarrollo de software de analíticas de audio y video, para el monitoreo automático en tiempo real de los espacios urbanos.  
 
-\medskip
+\bigskip
 En el marco del proyecto de la empresa anteriormente mencionado, se realizó una prueba de concepto sobre la implementación de analíticas de audio en tiempo real para seguridad urbana. Con este fin se realizó un estudio del estado del arte para luego seguir con el desarrollo de una plataforma de procesamiento de audio a nivel de laboratorio. 
 
-\medskip
-En lo que sigue el documento está dividido en tres secciones. En la Sección \ref{PP} se detalla sobre la plataforma de procesamiento desarrollada. En la Sección \ref{analiticas} sobre los algoritmos utilizados para la implementación de dos analíticas de audio particulares: Detección de Niveles Predefinidos de Sonido y Detección de Sirenas. Por último en la Sección \ref{concl} se encuentra una breve reflexión sobre la sinergia de la pasantía laboral y los estudios de académicos, en el marco de la Maestría de Ingeniería Eléctrica actualmente en curso, a modo de conclusión.  
+\bigskip
+En lo que sigue el documento está dividido en tres secciones. En la Sección \ref{literatura} se hace una breve revisión bibliografíca, por otro lado en la \ref{PP} se detalla sobre la plataforma de procesamiento desarrollada. En la Sección \ref{analiticas} sobre los algoritmos utilizados para la implementación de dos analíticas de audio particulares: Detección de Niveles Predefinidos de Sonido y Detección de Sirenas. Por último en la Sección \ref{concl} se encuentra una breve reflexión sobre la sinergia de la pasantía laboral y los estudios de académicos, en el marco de la Maestría de Ingeniería Eléctrica actualmente en curso.  
 
 \subsection{Sobre SONDA Uruguay}
 SONDA Uruguay es fundamentalmente una empresa de servicios, proyectos de integración de sistemas y provisión de plataformas en el campo de las tecnologías de la información. Actualmente la empresa está incorporando proyectos de I+D en el área de tratamiento de señales. Tal es el caso del proyecto de desarrollo de analíticas de audio y video en tiempo real con aplicación a seguridad urbana. En el mismo, se encuentran involucradas ocho personas, profesionales y estudiantes de Ingeniería de Sistemas y Eléctrica, que complementan la rama de computación científica con el manejo de la ingeniería de software para aplicaciones críticas de gran volumen de datos.  
@@ -82,9 +82,10 @@ SONDA Uruguay es fundamentalmente una empresa de servicios, proyectos de integra
 %----------------------------------------------------------------------------------------
 
 \section{Revisión Bibliográfica}
+\label{literatura}
 Si bien la investigación y desarrollo de algoritmos sobre señales de video para detección automática de eventos relevantes, hace años que son de interés por científicos y empresas, aún hoy en día no son lo suficientemente confiables y robustos para las exigencias de aplicaciones en seguridad. Es en este escenario que los sensores de audio toman relevancia, ya sea en conjunto con el video o de forma independiente, generando el interés en la última década de la comunidad científica así como el sector comercial. 
 
-\medskip
+\bigskip
 En la publicación \cite{crocco2014audio} se tiene un resumen de los algoritmos  
 
 
@@ -96,12 +97,12 @@ En la publicación \cite{crocco2014audio} se tiene un resumen de los algoritmos
 \label{PP}
 Los sensores para Seguridad Urbana (en particular las cámaras de video y micrófonos) son diseñados para trabajar en tiempo real, transmitiendo a través de una red IP los datos adquiridos, a una central donde se realiza el monitoreo y la toma de decisiones. Es en este escenario donde los algoritmos de procesamiento de audio se encuentran embebidos y los tiempos de procesamiento no deben exceder la cadencia de disponibilidad de datos.
 
-\smallskip
+\bigskip
 La plataforma de procesamiento, se puede dividir en dos grandes bloques: por un lado el de genereración de datos de audio y comunicaciones, y por otro la adquisición desde la red y procesamiento para la toma de decisiones, como se observa en la Figura \ref{fig:plataforma_procesamiento}.
-\smallskip
+\bigskip
 
 Del lado de la generación de los datos de audio el tipo de micrófono (patrón polar, sensibilidad, etc.) y el codec (frecuencia de muestreo, bitdepth, etc.) definen la información sonora que se extrae del escenario monitoreado. El tipo de análisis que se pueda hacer va a depender de las anteriores características del sistema.
-\smallskip
+\bigskip
 
 Por otro lado el módulo de adquisición hace disponible las muestras de audio, en ventanas de largo configurable según los requerimientos del algoritmo. El análisis se hace ventana a ventana (frame by frame en la literatura) y en el caso particular de detección de sirenas (sección: \ref{deteccion de sirenas}), se utiliza una estrategia de integración temporal para aumentar la robustez a falsas alarmas, debidas al análisis local ventana a ventana.
 
@@ -170,7 +171,7 @@ Se trata de dos clasificadores anidados con una etapa de integración temporal i
 
 \subsubsection{Substractor de Fondo}
 En aplicaciones de Seguridad Urbana, se utilizan algoritmos de substracción de fondo (en la literatura \textit{Background Substraction}, \cite{crocco2014audio}) como una primer etapa de análisis y conceptualización de la señal de entrada. En otras palabras estos algoritmos modelan los patrones que dominan el ambiente y detectan anormalidades.
-\smallskip 
+\bigskip 
 
 El modelado del ruido ambiente con un enfoque supervisado tiene la dificultad de la generación de una base de datos que resuma y caracterice la infinidad de posibilidades que existen en un entorno urbano. Por esta razón se optó por un enfoque de clase unitaria utilizando One-Class SVM (\cite{rabaoui2008one}, \citep{lecomte2011abnormal}).
 
@@ -179,7 +180,7 @@ Teniendo en cuenta que no se conoce nada a priori sobre el ruido ambiente y adem
 
 \subsubsection*{Entrenamiento y Clasificación}
 El entrenamiento se realiza en tiempo real, con fragmentos del propio ruido ambiente en donde el sistema se encuentra funcionando. Permite independencia de una base de datos para entrenamiento y robustez frente a cambios naturales en el escenario de análisis, como son la noche y el día por ejemplo. 
-\smallskip
+\bigskip
 
 El largo del fragmento es variable permitiendo adaptarse a escenarios complejos, sacrificando costo computacional. Se utiliza un clasificador One-Class SVM que detecta en cada ventana de entrada si pertenece o no al modelo de fondo generado en el One-Class SVM.
 
@@ -187,7 +188,7 @@ El largo del fragmento es variable permitiendo adaptarse a escenarios complejos,
 
 Previo a la etapa de clasificación de sirena o no, se utiliza un esquema de integración temporal y una medida de distancia para decidir si continuar o descartar las muestras de audio.
 
-\smallskip
+\bigskip
 Se integran ventanas adyacentes y mediante la distancia binaria de Huffman, con un umbral parametrizable, se define si ese fragmento mayor de audio pasa a la siguiente etapa de clasificación, observar Figura \ref{fig:integracion_temporal}. 
 
 \begin{figure}[h]
