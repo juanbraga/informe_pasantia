@@ -226,6 +226,14 @@ Para el entrenamiento se utilizó un enfoque de clase unitaria utilizando One-Cl
 \section{Experimentos}
 \label{experimentos}
 
+\subsubsection*{Base de Datos}
+Para la evaluación de desempeño se trabaja con la base de datos de acceso público llamada \textit{Urban Sound Dataset} \citep{Salamon:UrbanSound:ACMMM:14}. Está organizada en 10 clases de sonidos urbanos: \textit{Calle, Niños, Ladrido de Perro, Aire Acondicionado, Perforación, Martillo Neumático, Motor, Sirena, Bocina de Auto y Disparo.}
+
+La base de datos se construye a partir de audios reales de ambientes urbanos. A partir de los cuales se generan clips de 4 segundos donde predomina alguna de las anteriores clases. Para evitar redundancia en la etapa de test 
+
+\subsubsection*{Extracción de características}
+Se utilizan al igual que en la publicación \cite{Salamon:UrbanSound:ACMMM:14} los primeros 25 coeficientes MFCC (Mel-Frequency Cepstral Coeficients), calculados sobre un banco de filtros Mel de 40 bandas, generado con ventanas temporales de 20ms, 50\% de solapamiento y enventanado hamming. Lo anterior se computa sobre el audio completo que sale de la integración temporal (en la Figura \ref{fig:integracion_temporal} se ejemplifica con 4 segundos de audio) y se aplican estadísticas para resumir a un vector de 275 características: máximo, mínimo, media, mediana, varianza, skewness, kurtosis y media y varianza de la primer y segunda derivada de los coeficientes Mel a lo largo del tiempo.
+
 \subsubsection*{Réplica de la publicación original}
 
 \subsubsection*{Frecuencia de muestreo 8KHz}
