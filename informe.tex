@@ -83,17 +83,28 @@ SONDA Uruguay es fundamentalmente una empresa de servicios, proyectos de integra
 
 \section{Revisión Bibliográfica}
 \label{literatura}
-Si bien la investigación y desarrollo de algoritmos sobre señales de video para detección automática de eventos relevantes, hace años que son de interés por científicos y empresas, aún hoy en día no son lo suficientemente confiables y robustos para las exigencias de aplicaciones en seguridad. Es en este escenario que los sensores de audio toman relevancia, ya sea en conjunto con el video o de forma independiente, generando el interés en la última década de la comunidad científica así como el sector comercial. 
+Si bien la investigación y desarrollo de algoritmos sobre señales de video para detección automática de eventos relevantes, son de interés para científicos y empresas hace unos años, aún hoy en día no son lo suficientemente confiables y robustos para las exigencias de aplicaciones en seguridad. Es en este escenario que los sensores de audio toman relevancia, ya sea en conjunto con el video o de forma independiente, generando el interés en la última década de la comunidad científica así como el sector comercial. 
 
 \bigskip
-En la publicación \cite{crocco2014audio} se tiene un resumen de los algoritmos  
+En la publicación \cite{crocco2014audio} se tiene un resumen de los métodos automáticos basados en audio con aplicación a seguridad. Se especifica una taxonomía que facilita la comparación entre algoritmos y su función: \textit{Extracción de Fondo, Clasificación de Eventos, Tracking de Objetos y Análisis del Entorno}. Para cada clase se citan los trabajos más relevantes detallando los puntos fuertes y débiles. En adición se hace un análisis de expresividad de características computables a partir de audio con aplicación en las distintas etapas anteriormente mencionadas. 
 
+\bigskip
+En el marco del presente trabajo la atención se centró a los algoritmos que atacan las etapas de \textit{Extracción de Fondo} y \textit{Clasificación de Eventos} ya que son los que componen el sistema implementado.
+
+\bigskip
+Existen diversos métodos utilizados para la \textit{Extracción de Fondo (Background Substraction en Inglés)} en audio. Los más simples se basan en medidas unidimensionales, en general basadas en la estimación de intensidad. Tal es el caso de la publicación \cite{dufaux2000automatic} para la detección automática de sonidos impulsivos tales como roturas de vidrio, tiros de pistola, explosiones, entre otros. Por otro lado los métodos basados en características multidimensionales son los de mayor robustez en escenarios complejos. En el trabajo publicado por \cite{lecomte2011abnormal} se propone un método no supervisado para la detección de eventos anormales en audio ambiente. Está basado en un \textit{One-Class SVM} para modelar la distribución del sonido normal en un ambiente y extracción de características basadas en un banco de filtros. Además introduce un método para generar una base de datos de sonidos basada en audio reales.
+ 
+\bigskip 
+La clasificación de eventos en audio se resuelve usualmente con un enfoque de clasificación supervisada. En primer lugar características son computadas a partir de las muestras de audio etiquetadas, permitiendo aprender un clasificador especifico en base a un conjunto acotado de muestras, de manera \textit{off-line}. A este primera etapa se la suele llamar de \textit{Entrenamiento}. Luego se da paso a la evaluación del desempeño del clasificador entrenado, con nuevas muestras de audio no utilizadas en la etapa anterior. 
+
+\bigskip
+En el libro \textit{Introduction to Audio Content Analysis} \citep{Lerch:2012:IAC:2392638} el Capítulo 3 está dedicado a las características de tiempo corto o instantáneas. Son denominadas así las que se computan en un entorno temporal de la muestra actual donde la naturaleza de la señal se puede suponer estacionaria. Se encuentran divididas en 4 clases para facilidad de comprensión: \textit{Propiedades Estadísticas, Forma Espectral, Propiedades de la Señal y Propiedades de Intensidad}. Siendo un buen manual para consulta rápida de las características más utilizadas. En el siguiente Capítulo del mismo libro se detalla sobre la medida de intensidad en señales de audio, comienza desambigüando los términos \textit{Sonoridad (Loudness en Inglés)} e \textit{Intensidad}, haciendo un paralelismo con las dinámicas en música y definiendo las medidas de intensidad más comunes.
 
 %----------------------------------------------------------------------------------------
 %	SECTION 2
 %----------------------------------------------------------------------------------------
 
-\section{Plataforma de procesamiento}
+\section{Plataforma de Procesamiento}
 \label{PP}
 Los sensores para Seguridad Urbana (en particular las cámaras de video y micrófonos) son diseñados para trabajar en tiempo real, transmitiendo a través de una red IP los datos adquiridos, a una central donde se realiza el monitoreo y la toma de decisiones. Es en este escenario donde los algoritmos de procesamiento de audio se encuentran embebidos y los tiempos de procesamiento no deben exceder la cadencia de disponibilidad de datos.
 
@@ -126,7 +137,7 @@ Las analíticas son el modulo de procesamiento de audio que transforman los dato
 \subsection{Analítica de Detección de Niveles Predefinidos de Sonido}
 Tiene como objetivo alertar la presencia de momentos de alto nivel sonoro o ausencia del mismo. Se hace una estimación de la energía, de la señal de entrada, frame a frame y se umbraliza para generar alertas en niveles energéticos predefinidos por el usuario.
 
-\subsubsection{Medidas de energía utilizadas}
+\subsubsection{Medidas de energía}
 Se utilizan dos estimaciones de energía para detección de cambios energéticos de distinta naturaleza, por un lado cambios sostenidos en el tiempo y por otro lado los impulsivos.
 
 \subsubsection*{RMS}

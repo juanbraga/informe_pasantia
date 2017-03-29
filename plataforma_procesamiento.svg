@@ -8,7 +8,6 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="744.09448819"
@@ -34,18 +33,6 @@
          style="stop-color:#797979;stop-opacity:1;"
          offset="0"
          id="stop5820" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       id="linearGradient5786">
-      <stop
-         style="stop-color:#ffffff;stop-opacity:1;"
-         offset="0"
-         id="stop5788" />
-      <stop
-         style="stop-color:#ffffff;stop-opacity:0;"
-         offset="1"
-         id="stop5790" />
     </linearGradient>
     <marker
        inkscape:stockid="Arrow1Lend"
@@ -129,66 +116,6 @@
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
          transform="matrix(-0.8,0,0,-0.8,-10,0)" />
     </marker>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient5786"
-       id="linearGradient5792"
-       x1="440.29382"
-       y1="453.3075"
-       x2="605.13538"
-       y2="453.3075"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.001242,0,0,0.55109584,-0.45857872,52.73008)" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient5786"
-       id="linearGradient5794"
-       x1="129.55655"
-       y1="454.6229"
-       x2="294.3981"
-       y2="454.6229"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.001242,0,0,0.55109584,-0.45857872,52.73008)" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient5786"
-       id="linearGradient5796"
-       x1="440.88013"
-       y1="300.90394"
-       x2="605.72168"
-       y2="300.90394"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.001242,0,0,0.55109584,-0.45857872,52.73008)" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient5786"
-       id="linearGradient5798"
-       x1="130.14285"
-       y1="302.21931"
-       x2="294.98441"
-       y2="302.21931"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.001242,0,0,0.55109584,-0.45857872,52.73008)" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient5786"
-       id="linearGradient5800"
-       x1="441.9816"
-       y1="148.75666"
-       x2="606.82315"
-       y2="148.75666"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.001242,0,0,0.55109584,-0.45857872,52.73008)" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient5786"
-       id="linearGradient5802"
-       x1="131.24432"
-       y1="148.07204"
-       x2="296.08588"
-       y2="148.07204"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.001242,0,0,0.55109584,-0.45857872,52.73008)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -197,9 +124,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="114.19085"
-     inkscape:cy="670.0497"
+     inkscape:zoom="1.4"
+     inkscape:cx="227.89823"
+     inkscape:cy="699.24523"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -229,42 +156,42 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="opacity:0.24800002;fill:url(#linearGradient5798);fill-opacity:1;stroke:#000000;stroke-width:0.74281913;stroke-opacity:1"
+       style="opacity:0.24800002;fill:#0000ff;fill-opacity:0.2711111;stroke:none;stroke-width:0.74281913;stroke-opacity:0.95555562"
        id="rect4450-6"
        width="165.04628"
        height="54.322304"
        x="129.8459"
        y="192.12073" />
     <rect
-       style="opacity:0.24800002;fill:url(#linearGradient5794);fill-opacity:1;stroke:#000000;stroke-width:0.74281913;stroke-opacity:1"
+       style="opacity:0.24800002;fill:#0000ff;fill-opacity:0.2711111;stroke:none;stroke-width:0.74281913;stroke-opacity:0.95555562"
        id="rect4450-6-6"
        width="165.04628"
        height="54.322304"
        x="129.25888"
        y="276.10971" />
     <rect
-       style="opacity:0.24800002;fill:url(#linearGradient5802);fill-opacity:1;stroke:#000000;stroke-width:0.74281913;stroke-opacity:1"
+       style="opacity:0.24800002;fill:#0000ff;fill-opacity:0.2711111;stroke:none;stroke-width:0.74281913;stroke-opacity:0.95555562"
        id="rect4450-6-2"
        width="165.04628"
        height="54.322304"
        x="130.94875"
        y="107.17082" />
     <rect
-       style="opacity:0.24800002;fill:url(#linearGradient5796);fill-opacity:1;stroke:#000000;stroke-width:0.74281913;stroke-opacity:1"
+       style="opacity:0.24800002;fill:#0000ff;fill-opacity:0.2711111;stroke:none;stroke-width:0.74281913;stroke-opacity:0.95555562"
        id="rect4450-6-27"
        width="165.04628"
        height="54.322304"
        x="440.96909"
        y="191.39584" />
     <rect
-       style="opacity:0.24800002;fill:url(#linearGradient5792);fill-opacity:1;stroke:#000000;stroke-width:0.74281913;stroke-opacity:1"
+       style="opacity:0.24800002;fill:#0000ff;fill-opacity:0.2711111;stroke:none;stroke-width:0.74281913;stroke-opacity:0.95555562"
        id="rect4450-6-6-0"
        width="165.04628"
        height="54.322304"
        x="440.38208"
        y="275.3848" />
     <rect
-       style="opacity:0.24800002;fill:url(#linearGradient5800);fill-opacity:1;stroke:#000000;stroke-width:0.74281913;stroke-opacity:1"
+       style="opacity:0.24800002;fill:#0000ff;fill-opacity:0.2711111;stroke:none;stroke-width:0.74281913;stroke-opacity:0.95555562"
        id="rect4450-6-2-9"
        width="165.04628"
        height="54.322304"
@@ -408,7 +335,7 @@
        xml:space="preserve"
        id="flowRoot12503"
        style="font-style:normal;font-weight:normal;font-size:13px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-       transform="matrix(1.1150819,0,0,1.0852278,404.68908,120.92585)"><flowRegion
+       transform="matrix(1.1150819,0,0,1.0852278,404.68908,118.92585)"><flowRegion
          id="flowRegion12505"><rect
            id="rect12507"
            width="140.41121"
@@ -429,18 +356,18 @@
            id="rect12515" /></flowRegion><flowPara
          style="font-size:18px"
          id="flowPara12517">Adquisición</flowPara></flowRoot>    <rect
-       style="opacity:0.20987657;fill:#797979;fill-opacity:0.46222222;stroke:#000000;stroke-width:2.15417552;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:0.20987657;fill:#797979;fill-opacity:0.46222223;stroke:#000000;stroke-width:2.15417552;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect12529-1"
        width="286.22821"
        height="258.86133"
        x="383.6474"
-       y="89.023537" />
+       y="89.023529" />
     <rect
-       style="opacity:0.20987657;fill:#797979;fill-opacity:0.46222222;stroke:#000000;stroke-width:2.15417552;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:0.20987657;fill:#797979;fill-opacity:0.46222223;stroke:#000000;stroke-width:2.15417552;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect12529-1-5"
        width="286.22821"
        height="258.86133"
        x="68.604294"
-       y="88.377228" />
+       y="90.377228" />
   </g>
 </svg>
